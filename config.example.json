@@ -1,4 +1,5 @@
 {
   "token": "BOT-TOKEN",
-  "language": "CHOOSE-BETWEEN-EN-OR-NL"
+  "language": "CHOOSE-BETWEEN-EN-OR-NL",
+  "Ocp-Apim-Subscription-Key": "OCP-APIM-SUBSCRIPTION-KEY",
 }
