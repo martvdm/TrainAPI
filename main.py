@@ -1,34 +1,29 @@
 import discord
 import json
 from datetime import datetime
+import modules as module
 from discord.ext import commands
 from discord.ext.commands import Bot
 from discord_slash import SlashCommand, SlashContext
 from discord_slash.utils.manage_commands import create_choice, create_option
 
-
-client = commands.Bot(command_prefix='!')
+client = Bot(command_prefix='!')
 slash = SlashCommand(client, sync_commands=True)
 
 with open("config.json") as jsonfile:
     config = json.load(jsonfile)
 
-
-
 @client.event
 async def on_ready():
     print('\033[92mLoading data... \n \033[94mLoaded client: {0.user}'.format(client))
-    print('\033[92mLoading commands...')
-    print('\033[92mLoaded commands!')
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"ov-NL"))
-
 
 @slash.slash(name="station", description="Get the current station")
 async def station(ctx, *, station):
+    module.station.station().run()
     import http.client, urllib.request, urllib.parse, urllib.error, base64
     headers = {
-        # Request headers
-        'Ocp-Apim-Subscription-Key': f"{config['Ocp-Apim-Subscription-Key']}",
+        'Ocp-Apim-Subscription-Key': f"{config['api']['NS-PRIMARY']}",
     }
     params = urllib.parse.urlencode({
         # Request parameters
@@ -54,11 +49,8 @@ async def station(ctx, *, station):
     embed.set_footer(text="ov-NL")
     await ctx.send(embed=embed)
 
-
-
-
-
-
-
+@slash.slash(name="project", description="Get the current working time of the project")
+async def project(ctx):
+    ctx.send("Please specify a station")
 
 client.run(config['token'])
