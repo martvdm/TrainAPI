@@ -20,7 +20,6 @@ async def on_ready():
 
 @slash.slash(name="station", description="Get the current station")
 async def station(ctx, *, station):
-    module.station.station().run()
     import http.client, urllib.request, urllib.parse, urllib.error, base64
     headers = {
         'Ocp-Apim-Subscription-Key': f"{config['api']['NS-PRIMARY']}",
@@ -41,16 +40,19 @@ async def station(ctx, *, station):
         json_data = json.loads(json_raw)
         conn.close()
     except Exception as e:
+        await ctx.send('Het ophalen van de API is mislukt. Probeer het later opnieuw.')
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
-    embed = discord.Embed(title="Current station", description=f"{station}", color=0x00ff00)
+    cancelledembed = discord.Embed(title="Cancelled:", color=0xFF0000)
+    embed = discord.Embed(title="Current station", description=f"{station}", color=0x000065)
     for departures in json_data['payload']['departures']:
         time = datetime.strptime(departures['plannedDateTime'], '%Y-%m-%dT%H:%M:%S+%f').strftime('%H:%M')
-        embed.add_field(name=f"{departures['direction']}", value=f"**Type:** {departures['product']['shortCategoryName']} \n **Spoor:** {departures['plannedTrack']} \n **Vertrek:** {time}", inline=True)
+        if departures['cancelled'] == False:
+            embed.add_field(name=f"{departures['direction']}", value=f"**Type:** {departures['product']['shortCategoryName']} \n **Spoor:** {departures['plannedTrack']} \n **Vertrek:** {time}", inline=True)
+        else:
+            cancelledembed.add_field(name=f"{departures['direction']}", value=f"{departures['product']['shortCategoryName']} | {departures['messages'][0]['message']} \n van {time}", inline=False)
     embed.set_footer(text="ov-NL")
+    if cancelledembed:
+        await ctx.send(embed=cancelledembed)
     await ctx.send(embed=embed)
-
-@slash.slash(name="project", description="Get the current working time of the project")
-async def project(ctx):
-    ctx.send("Please specify a station")
 
 client.run(config['token'])
