@@ -7,6 +7,7 @@ from discord.ext.commands import Bot
 from discord_slash import SlashCommand, SlashContext
 from discord_slash.utils.manage_commands import create_choice, create_option
 
+
 client = Bot(command_prefix='!')
 slash = SlashCommand(client, sync_commands=True)
 
@@ -42,7 +43,7 @@ async def station(ctx, *, station):
     except Exception as e:
         await ctx.send('Het ophalen van de API is mislukt. Probeer het later opnieuw.')
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
-    cancelledembed = discord.Embed(title="Cancelled:", color=0xFF0000)
+    cancelledembed = discord.Embed(title="Cancelled:", color=0xff5e5e)
     embed = discord.Embed(title="Current station", description=f"{station}", color=0x000065)
     for departures in json_data['payload']['departures']:
         time = datetime.strptime(departures['plannedDateTime'], '%Y-%m-%dT%H:%M:%S+%f').strftime('%H:%M')
@@ -51,8 +52,8 @@ async def station(ctx, *, station):
         else:
             cancelledembed.add_field(name=f"{departures['direction']}", value=f"{departures['product']['shortCategoryName']} | {departures['messages'][0]['message']} \n van {time}", inline=False)
     embed.set_footer(text="ov-NL")
-    if cancelledembed:
+    if cancelledembed.fields:
         await ctx.send(embed=cancelledembed)
     await ctx.send(embed=embed)
 
-client.run(config['token'])
+client.run(config['token']);
