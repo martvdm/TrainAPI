@@ -31,7 +31,7 @@ async def station(ctx, *, station):
         'station': f'{station}',
         'uicCode': '',
         'dateTime': '',
-        'maxJourneys': '6',
+        'maxJourneys': '8',
     })
     try:
         conn = http.client.HTTPSConnection('gateway.apiportal.ns.nl')
@@ -54,6 +54,7 @@ async def station(ctx, *, station):
     embed.set_footer(text="ov-NL")
     if cancelledembed.fields:
         await ctx.send(embed=cancelledembed)
+    print('\x1b[6;30;42m' + f'{ctx.author} requested station: {station}' + '\x1b[0m')
     await ctx.send(embed=embed)
 
 client.run(config['token']);
