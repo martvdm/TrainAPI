@@ -30,3 +30,9 @@ def get_station(station):
     type = 'places'
     get_stations = request_nsapi(type, params, api)
     return get_stations['payload'][0]['locations'][0]
+
+def get_train(ridenumber):
+    params = urllib.parse.urlencode({
+    })
+    url = f"/virtual-train-api/api/v1/trein/{ridenumber}"
+    return request_nsapi(url, params)
