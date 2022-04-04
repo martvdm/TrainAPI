@@ -19,5 +19,15 @@ def request_nsapi(type, params, api):
     except Exception as e:
         print('Het ophalen van de API is mislukt. Probeer het later opnieuw.')
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
-
     return json_data
+
+def get_station(station):
+    params = urllib.parse.urlencode({
+        'q':  f'station {station}',
+        'limit': '1',
+        'lang': f'{ config["language"] }',
+    })
+    api = 'places-api'
+    type = 'places'
+    get_stations = request_nsapi(type, params, api)
+    return get_stations['payload'][0]['locations'][0]
