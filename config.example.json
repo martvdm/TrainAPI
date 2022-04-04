@@ -1,7 +1,15 @@
 {
-  "token": "BOT-TOKEN",
-  "language": "CHOOSE-BETWEEN-EN-OR-NL",
-  "api": {
-    "NS-PRIMARY": "OCP-APIM-SUBSCRIPTION-KEY"
-  }
+  "token": "BOT_TOKEN",
+  "language": "LANGUAGE (en, nl)",
+   "api": {
+    "NS-PRIMARY": "Ocp-Apim-Subscription-Key"
+  },
+   "app": {
+     "author": "Mart",
+     "invite": "https://discord.com/api/oauth2/authorize?client_id=959101335008063558&permissions=8&scope=bot%20applications.commands",
+     "testing": {
+       "server": "TEST-SERVER-ID",
+       "channel": "TEST-CHANNEL-ID"
+     }
+   }
 }
