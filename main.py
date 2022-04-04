@@ -31,9 +31,8 @@ async def station(ctx, *, station):
         'dateTime': '',
         'maxJourneys': '6',
     })
-    type = 'departures'
-    api = 'reisinformatie-api/api'
-    json_data = request_nsapi(type, params, api)
+    url = f'/reisinformatie-api/api/v2/departures'
+    json_data = request_nsapi(url, params)
     cancelledembed = discord.Embed(title="Cancelled:", color=0xff5e5e)
     embed = discord.Embed(title="Current station", description=f"{station['description']}", color=0x000065)
     print(json_data)
