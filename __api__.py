@@ -11,7 +11,7 @@ def request_nsapi(type, params, api):
     }
     try:
         conn = http.client.HTTPSConnection('gateway.apiportal.ns.nl')
-        conn.request("GET", f"/reisinformatie-api/api/v2/{type}?%s" % params, "{body}", headers)
+        conn.request("GET", f"/{api}/v2/{type}?%s" % params, "{body}", headers)
         response = conn.getresponse()
         json_raw = response.read()
         json_data = json.loads(json_raw)
