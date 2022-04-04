@@ -19,19 +19,23 @@ async def on_ready():
 
 @slash.slash(name="station", description="Get the current")
 async def station(ctx, *, station):
-    from __api__ import request_api_travelinfo
+    from __api__ import get_station
+    station = get_station(station)
+    stationcode = station['stationCode']
+    from __api__ import request_nsapi
     params = urllib.parse.urlencode({
         # Request parameters
         'lang': f'{config["language"]}',
-        'station': f'{station}',
+        'station': f'{stationcode}',
         'uicCode': '',
         'dateTime': '',
         'maxJourneys': '6',
     })
     type = 'departures'
-    json_data = request_api_travelinfo(type, params)
+    api = 'reisinformatie-api/api'
+    json_data = request_nsapi(type, params, api)
     cancelledembed = discord.Embed(title="Cancelled:", color=0xff5e5e)
-    embed = discord.Embed(title="Current station.py", description=f"{station}", color=0x000065)
+    embed = discord.Embed(title="Current station", description=f"{station['description']}", color=0x000065)
     print(json_data)
     for departures in json_data['payload']['departures']:
         time = datetime.strptime(departures['plannedDateTime'], '%Y-%m-%dT%H:%M:%S+%f').strftime('%H:%M')
@@ -42,7 +46,7 @@ async def station(ctx, *, station):
     embed.set_footer(text="ov-NL")
     if cancelledembed.fields:
         await ctx.send(embed=cancelledembed)
-    print('\x1b[6;30;42m' + f'{ctx.author} requested station: {station}' + '\x1b[0m')
+    print('\x1b[6;30;42m' + f'{ctx.author} requested station: {station["description"]}' + '\x1b[0m')
     await ctx.send(embed=embed)
 
 client.run(config['token']);
