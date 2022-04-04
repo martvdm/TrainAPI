@@ -1,10 +1,10 @@
 import json
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 
+with open("config.json") as jsonfile:
+    config = json.load(jsonfile)
 
-def request_api_travelinfo(type, params):
-    with open("config.json") as jsonfile:
-        config = json.load(jsonfile)
+def request_nsapi(type, params, api):
 
     headers = {
         'Ocp-Apim-Subscription-Key': f"{config['api']['NS-PRIMARY']}",
