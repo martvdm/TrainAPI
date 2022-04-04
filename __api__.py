@@ -26,9 +26,8 @@ def get_station(station):
         'limit': '1',
         'lang': f'{ config["language"] }',
     })
-    api = 'places-api'
-    type = 'places'
-    get_stations = request_nsapi(type, params, api)
+    url = f"/places-api/v2/places"
+    get_stations = request_nsapi(url, params)
     return get_stations['payload'][0]['locations'][0]
 
 def get_train(ridenumber):
