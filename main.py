@@ -21,6 +21,7 @@ async def on_ready():
 async def station(ctx, *, station):
     from __api__ import get_station
     station = get_station(station)
+    from __api__ import get_train
     stationcode = station['stationCode']
     from __api__ import request_nsapi
     params = urllib.parse.urlencode({
@@ -37,9 +38,14 @@ async def station(ctx, *, station):
     embed = discord.Embed(title="Current station", description=f"{station['description']}", color=0x000065)
     print(json_data)
     for departures in json_data['payload']['departures']:
+        ridenumber = departures['product']['number']
+        train = get_train(ridenumber)
         time = datetime.strptime(departures['plannedDateTime'], '%Y-%m-%dT%H:%M:%S+%f').strftime('%H:%M')
         if departures['cancelled'] == False:
-            embed.add_field(name=f"{departures['direction']}", value=f"**Type:** {departures['product']['shortCategoryName']} \n **Spoor:** {departures['plannedTrack']} \n **Vertrek:** {time}", inline=True)
+            if train['type'] == 'SNG':
+                train['type'] = 'NOSEATER'
+
+            embed.add_field(name=f"{departures['direction']}", value=f"**Type:** {departures['product']['shortCategoryName']} \n **Treintype:** {train['type']}{train['lengte']} \n **Spoor:** {departures['plannedTrack']} \n **Vertrek:** {time}", inline=True)
         else:
             cancelledembed.add_field(name=f"{departures['direction']}", value=f"{departures['product']['shortCategoryName']} | {departures['messages'][0]['message']} \n van {time}", inline=False)
     embed.set_footer(text="ov-NL")
