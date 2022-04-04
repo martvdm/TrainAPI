@@ -4,14 +4,13 @@ import http.client, urllib.request, urllib.parse, urllib.error, base64
 with open("config.json") as jsonfile:
     config = json.load(jsonfile)
 
-def request_nsapi(type, params, api):
-
+def request_nsapi(url, params):
     headers = {
         'Ocp-Apim-Subscription-Key': f"{config['api']['NS-PRIMARY']}",
     }
     try:
         conn = http.client.HTTPSConnection('gateway.apiportal.ns.nl')
-        conn.request("GET", f"/{api}/v2/{type}?%s" % params, "{body}", headers)
+        conn.request("GET", f"{url}?%s" % params, "{body}", headers)
         response = conn.getresponse()
         json_raw = response.read()
         json_data = json.loads(json_raw)
