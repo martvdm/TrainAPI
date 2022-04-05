@@ -23,7 +23,7 @@ def request_nsapi(url, params):
 def get_station(station):
     params = urllib.parse.urlencode({
         'q':  f'{station}',
-        'limit': 5,
+        'limit': 8,
         'details': 'false',
         'lang': f'{ config["language"] }',
     })
