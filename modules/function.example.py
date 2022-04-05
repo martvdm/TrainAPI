@@ -6,5 +6,5 @@ from discord.ext import commands
 from discord.ext.commands import Bot
 from discord_slash import SlashCommand, SlashContext
 
-def function(ctx, paramets):
+def function(ctx, parameters):
     return "Hello, World!"
