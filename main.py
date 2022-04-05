@@ -5,8 +5,8 @@ from datetime import datetime
 from discord.ext import commands
 from discord.ext.commands import Bot
 from discord_slash import SlashCommand, SlashContext
-import modules.commands
-import modules.functions
+import modules.commands as commandmodule
+import modules.functions as functionmodule
 
 client = Bot(command_prefix='!')
 slash = SlashCommand(client, sync_commands=True)
@@ -39,7 +39,7 @@ async def station(ctx, *, station):
     url = f'/reisinformatie-api/api/v2/departures'
     json_data = request_nsapi(url, params)
     cancelledembed = discord.Embed(title="Cancelled:", color=0xff5e5e)
-    embed = discord.Embed(title="Current station", description=f"{station['description']}", color=0x000065)
+    embed = discord.Embed(title="Departures station: ", description=f"{station['name']}", color=0x000065)
     for departures in json_data['payload']['departures']:
         ridenumber = departures['product']['number']
         train = get_train(ridenumber)
@@ -51,8 +51,8 @@ async def station(ctx, *, station):
     embed.set_footer(text="ov-NL")
     if cancelledembed.fields:
         await ctx.send(embed=cancelledembed)
-    print('\x1b[6;30;42m' + f'{ctx.author} requested station: {station["description"]}' + '\x1b[0m')
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{station['description']}"))
+    print('\x1b[6;30;42m' + f'{ctx.author} requested station: {station["name"]}' + '\x1b[0m')
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"Station {station['name']}"))
     await ctx.send(embed=embed)
 
 client.run(config['token'])

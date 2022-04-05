@@ -1,7 +1,7 @@
 import json
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 
-with open("config.json") as jsonfile:
+with open("./config.json") as jsonfile:
     config = json.load(jsonfile)
 
 def request_nsapi(url, params):
@@ -22,13 +22,25 @@ def request_nsapi(url, params):
 
 def get_station(station):
     params = urllib.parse.urlencode({
-        'q':  f'station {station}',
-        'limit': '1',
+        'q':  f'{station}',
+        'limit': 5,
+        'details': 'false',
         'lang': f'{ config["language"] }',
     })
     url = f"/places-api/v2/places"
-    get_stations = request_nsapi(url, params)
-    return get_stations['payload'][0]['locations'][0]
+    get_results = request_nsapi(url, params)
+    stationcode_results = []
+    for station in get_results['payload'][0]['locations']:
+        stationcode_results.append(station['stationCode'])
+    stationcode = min(stationcode_results, key=len)
+    params = urllib.parse.urlencode({
+        'station_code': f'{stationcode}',
+        'limit': 1,
+        'details': 'false',
+        'lang': f'{config["language"]}',
+    })
+    station = request_nsapi(url, params)
+    return station['payload'][0]['locations'][0]
 
 def get_train(ridenumber):
     params = urllib.parse.urlencode({
