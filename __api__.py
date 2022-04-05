@@ -34,4 +34,8 @@ def get_train(ridenumber):
     params = urllib.parse.urlencode({
     })
     url = f"/virtual-train-api/api/v1/trein/{ridenumber}"
-    return request_nsapi(url, params)
+    train = request_nsapi(url, params)
+    if 'type' not in train:
+        train['type'] = 'Onbekend'
+        train['lengte'] = ''
+    return train
