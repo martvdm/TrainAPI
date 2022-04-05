@@ -5,6 +5,8 @@ from datetime import datetime
 from discord.ext import commands
 from discord.ext.commands import Bot
 from discord_slash import SlashCommand, SlashContext
+import modules.commands
+import modules.functions
 
 client = Bot(command_prefix='!')
 slash = SlashCommand(client, sync_commands=True)
@@ -16,6 +18,8 @@ with open("config.json") as jsonfile:
 async def on_ready():
     print('\033[92mLoading data... \n \033[94mLoaded client: {0.user}'.format(client))
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"ov-NL"))
+
+
 
 @slash.slash(name="station", description="Get the current")
 async def station(ctx, *, station):
