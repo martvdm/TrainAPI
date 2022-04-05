@@ -8,11 +8,11 @@ from discord_slash import SlashCommand, SlashContext
 import __api__
 
 async def index(ctx, station, config, client):
-    from __api__ import get_station
+    from request import get_station
     station = get_station(station)
-    from __api__ import get_train
+    from request import get_train
     stationcode = station['stationCode']
-    from __api__ import request_nsapi
+    from __api__ import nsapi
     params = urllib.parse.urlencode({
         # Request parameters
         'lang': f'{config["language"]}',
@@ -22,7 +22,7 @@ async def index(ctx, station, config, client):
         'maxJourneys': '6',
     })
     url = f'/reisinformatie-api/api/v2/departures'
-    json_data = request_nsapi(url, params)
+    json_data = nsapi(url, params)
     cancelledembed = discord.Embed(title="Cancelled:", color=0xff5e5e)
     embed = discord.Embed(title="Departures station: ", description=f"{station['name']}", color=0x000065)
     for departures in json_data['payload']['departures']:
@@ -39,7 +39,7 @@ async def index(ctx, station, config, client):
                                      inline=False)
     embed.set_footer(text="ov-NL")
     if cancelledembed.fields:
-        await  ctx.send(embed=cancelledembed)
+        await ctx.send(embed=cancelledembed)
     print('\x1b[6;30;42m' + f'{ctx.author} requested station: {station["name"]}' + '\x1b[0m')
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"Station {station['name']}"))
     await ctx.send(embed=embed)
