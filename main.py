@@ -21,10 +21,14 @@ async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"ov-NL"))
 
 
-
 @slash.slash(name="station", description="Get station information")
 async def station(ctx, *, station):
     from modules.commands.station import index
     await index(ctx, station, config, client)
+
+@slash.slash(name="departures", description="Get station departures")
+async def departures(ctx, *, station):
+    from modules.commands.station import departures
+    await departures(ctx, station, config, client)
 
 client.run(config['token'])
