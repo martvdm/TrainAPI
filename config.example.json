@@ -11,5 +11,12 @@
        "server": "TEST-SERVER-ID",
        "channel": "TEST-CHANNEL-ID"
      }
-   }
+   },
+  "database": {
+    "host": "localhost",
+    "port": 3036,
+    "name": "database",
+    "user": "root",
+    "pass": ""
+  }
 }
