@@ -5,22 +5,23 @@ A discord bot that can trace calamities &amp; departure/arrival times of station
 # Made with Discord.py
 
 # Setup:
-**Create a discord APP/bot**
-https://discordjs.guide/preparations/setting-up-a-bot-application.html
+**Create a discord APP/bot:**
 
-**Clone the repo to your local machine.**
+**Please read:** https://discordjs.guide/preparations/setting-up-a-bot-application.html
+
+**Clone the repository:**
 ```bash
 git clone https://github.com/martvdm/TrainAPI.git
 ```
 
-**Install packages**
+**Install packages:**
 ```bash
 pip install -r requirements.txt
 ```
 
-**Rename the config.example.json**
-```python
-"config.example.json" > "config.json"
+**Create a config file:**
+```bash
+cp config.example.json config.json
 ```
 
 **Fill in the config.json file:**
@@ -52,7 +53,7 @@ pip install -r requirements.txt
 }
 ```
 
-**Run the bot**
+**Run the bot:**
 ```bash
 python3 main.py
 ```
