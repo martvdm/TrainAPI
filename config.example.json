@@ -1,12 +1,12 @@
 {
   "token": "BOT_TOKEN",
-  "language": "LANGUAGE (en, nl)",
+  "language": "en, nl",
    "api": {
     "NS-PRIMARY": "Ocp-Apim-Subscription-Key"
   },
    "app": {
      "author": "Mart",
-     "invite": "https://discord.com/api/oauth2/authorize?client_id=959101335008063558&permissions=8&scope=bot%20applications.commands",
+     "invite": "https://discord.com/api/oauth2/authorize?client_id=CLIENT_ID&permissions=8&scope=bot%20applications.commands",
      "testing": {
        "server": "TEST-SERVER-ID",
        "channel": "TEST-CHANNEL-ID"
@@ -15,8 +15,8 @@
   "database": {
     "host": "localhost",
     "port": 3036,
-    "name": "database",
-    "user": "root",
-    "pass": ""
+    "database": "database",
+    "username": "root",
+    "password": ""
   }
 }
