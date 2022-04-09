@@ -1,4 +1,5 @@
-# TrainAPI
+![Bot logo](https://cdn.discordapp.com/attachments/885185159522041867/962433451779309588/trainapi.PNG)
+
 A discord bot that can trace calamities &amp; departure/arrival times of stations. This bot uses the NS API, more information: https://apiportal.ns.nl/
 
 # Made with Discord.py
