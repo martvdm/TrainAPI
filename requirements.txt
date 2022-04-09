@@ -1,0 +1,5 @@
+discord.py
+asyncio
+discord-py-slash-command
+datetime
+mysql
