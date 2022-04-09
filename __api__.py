@@ -20,15 +20,6 @@ def nsapi(url, params):
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
     return json_data
 
-def wakatimeapi(url, params):
-    try:
-        conn = http.client.HTTPSConnection('wakatime.com')
-        conn.request("GET", f"{url}?%s" % params, "{body}")
-        response = conn.getresponse()
-        json_raw = response.read()
-        json_data = json.loads(json_raw)
-        conn.close()
-    except Exception as e:
-        print('Het ophalen van de API is mislukt. Probeer het later opnieuw.')
-        print("[Errno {0}] {1}".format(e.errno, e.strerror))
-    return json_data
+def githubapi(url, params):
+    
+    return

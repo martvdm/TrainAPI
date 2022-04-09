@@ -5,6 +5,7 @@ from datetime import datetime
 from discord.ext import commands
 from discord.ext.commands import Bot
 from discord_slash import SlashCommand, SlashContext
+from discord_slash.utils.manage_commands import create_option, create_choice
 import modules.commands as commandmodule
 import modules.functions as functionmodule
 
@@ -30,5 +31,10 @@ async def station(ctx, *, station):
 async def departures(ctx, *, station):
     from modules.commands.station import departures
     await departures(ctx, station, config, client)
+
+@slash.slash(name="trip", description="Manage trips.")
+async def trip(ctx: SlashContext):
+    from modules.commands.trip import index
+    await index(ctx, config, client)
 
 client.run(config['token'])
