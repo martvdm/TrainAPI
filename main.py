@@ -7,7 +7,6 @@ from discord.ext.commands import Bot
 from discord_slash import SlashCommand, SlashContext
 from discord_slash.utils.manage_commands import create_option, create_choice
 import modules.commands as commandmodule
-import modules.functions as functionmodule
 
 client = Bot(command_prefix='!')
 slash = SlashCommand(client, sync_commands=True)
@@ -19,6 +18,9 @@ with open("config.json") as jsonfile:
 @client.event
 async def on_ready():
     print('\033[92mLoading data... \n \033[94mLoaded client: {0.user}'.format(client))
+    import database.__init__ as db
+    db.create_tables(config)
+    print('\033[92mLoaded database')
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"ov-NL"))
 
 
