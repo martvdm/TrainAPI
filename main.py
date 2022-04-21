@@ -39,4 +39,14 @@ async def trip(ctx: SlashContext):
     from modules.commands.trip import index
     await index(ctx, config, client)
 
+@slash.slash(name="random", description="Get random station from current station")
+async def random(ctx, *, station):
+    from modules.commands.random import index
+    await index(ctx, config, client)
+
+@slash.slash(name="notify", description="Get notifications from a station")
+async def notify(ctx, *, station):
+    from modules.commands.notify import index
+    await index(ctx, station, config, client)
+
 client.run(config['token'])
