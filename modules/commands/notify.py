@@ -1,22 +1,35 @@
-import discord
+import discord.ext
+import mysql
+import pandas
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+from discord.ext import tasks
+from discord import client
+import asyncio
 import json
-import http.client, urllib.request, urllib.parse, urllib.error, base64
-from datetime import datetime, timedelta
-from discord.ext import commands
-from discord.ext.commands import Bot
-from discord_slash import SlashCommand, SlashContext
-from discord_slash.utils.manage_components import ComponentContext, create_actionrow, create_button, create_select, create_select_option
-from discord_slash.model import ButtonStyle
-import __api__
-from database.tables.notifications import create
-from request import get_station
+from database.tables.notifications import find_users
+from request import get_station, get_disruptions
+
 
 async def index(ctx, station, config, client):
     station = get_station(station)
     stationcode = station['stationCode']
     client_id = ctx.author.id
     from database.tables.notifications import create
-    await create(config, ctx, client_id, stationcode)
-    # embed = discord.Embed(title="Notify", description="No response from DB service. (Please contact maintainer)", color=0xff5e5e)
-    # embed.add_field(name="Tried to create a notification for:", value=f"Station:{station['name']} \n Client: {client_id}", inline=False)
-    # await ctx.send(embed=embed)
+    returnmessage = create(config, client_id, stationcode)
+    await ctx.send(returnmessage)
+
+async def checknotifications(client, config):
+    print(f'\033[93mChecking for notifications...')
+    disruptions = get_disruptions()
+    for disruption in disruptions:
+        if "publicationSections" in disruption.keys():
+            for station in disruption['publicationSections'][0]['section']['stations']:
+                users = find_users(config, station['stationCode'])
+                for user in users:
+                    receiver = await client.fetch_user(user[0])
+                    if receiver is not None:
+                        embed = discord.Embed(title=f'{disruption["title"]} - {disruption["timespans"][0]["cause"]["label"]}', description=f'{disruption["timespans"][0]["situation"]["label"]}', color=0xff5e5e)
+                        embed.add_field(name='Extra time:', value=f'{disruption["timespans"][0]["additionalTravelTime"]["maximumDurationInMinutes"]} minutes', inline=True)
+                        await receiver.send(embed=embed)
+    print(f'\033[0m {len(disruptions)} disruptions found')
