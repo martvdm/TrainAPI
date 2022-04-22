@@ -16,7 +16,7 @@ async def index(ctx, station, config, client):
     stationcode = station['stationCode']
     client_id = ctx.author.id
     from database.tables.notifications import create
-    create(config, client_id, stationcode)
-    embed = discord.Embed(title="Notify", description="No response from DB service. (Please contact maintainer)", color=0xff5e5e)
-    embed.add_field(name="Tried to create a notification for:", value=f"Station:{station['name']} \n Client: {client_id}", inline=False)
-    await ctx.send(embed=embed)
+    await create(config, ctx, client_id, stationcode)
+    # embed = discord.Embed(title="Notify", description="No response from DB service. (Please contact maintainer)", color=0xff5e5e)
+    # embed.add_field(name="Tried to create a notification for:", value=f"Station:{station['name']} \n Client: {client_id}", inline=False)
+    # await ctx.send(embed=embed)
