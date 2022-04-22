@@ -5,20 +5,24 @@ def index(cursor):
 
     sql = '''CREATE TABLE NOTIFICATIONS(
     ID int AUTO_INCREMENT,
-    CLIENT_ID INTEGER NOT NULL,
+    CLIENT_ID VARCHAR(255) NOT NULL,
     STATION VARCHAR(5) NOT NULL,
     PRIMARY KEY (ID)
     )'''
 
     cursor.execute(sql)
 
-def create(config, client_id, stationcode):
+
+async def create(config, ctx, client_id, stationcode):
+    import pandas as pd
     conn = mysql.connector.connect(user=config['database']['username'], password=config['database']['password'], host=config['database']['host'], port=config['database']['port'], database=config['database']['database'])
-    import database.tables.trips as trips
     cursor = conn.cursor()
-    trips.index(cursor)
     sql = "INSERT INTO NOTIFICATIONS (CLIENT_ID, STATION) VALUES (%s, %s)"
-    cursor.execute(sql, (client_id, stationcode))
-    conn.commit()
-    print(cursor.rowcount, "record inserted.")
+    statement = pd.read_sql(f"SELECT * FROM NOTIFICATIONS WHERE STATION = '{stationcode}' AND CLIENT_ID = '{client_id}'", conn)
+    if statement.values.any():
+        await ctx.send(f"Client already has a notification set")
+    else:
+        cursor.execute(sql, (client_id, stationcode))
+        conn.commit()
+        await ctx.send(f"Notification created for client {client_id} at station {stationcode}")
     conn.close()
