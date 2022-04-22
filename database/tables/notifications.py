@@ -24,5 +24,20 @@ async def create(config, ctx, client_id, stationcode):
     else:
         cursor.execute(sql, (client_id, stationcode))
         conn.commit()
-        await ctx.send(f"Notification created for client {client_id} at station {stationcode}")
+        message = f"Notification created for client {client_id} at station {stationcode}"
     conn.close()
+    return message
+
+def find_users(config,  stationcode):
+    import warnings
+    import pandas as pd
+    with warnings.catch_warnings():
+        warnings.simplefilter('ignore', UserWarning)
+    conn = mysql.connector.connect(user=config['database']['username'], password=config['database']['password'], host=config['database']['host'], port=config['database']['port'], database=config['database']['database'])
+    cursor = conn.cursor()
+    sql = f"SELECT CLIENT_ID FROM NOTIFICATIONS WHERE STATION = '{stationcode}'"
+    with warnings.catch_warnings():
+        warnings.simplefilter('ignore', UserWarning)
+        users = pd.read_sql(sql, conn)
+    conn.close()
+    return users.values

@@ -40,6 +40,14 @@ def get_train(ridenumber):
         train['lengte'] = ''
     return train
 
+def get_disruptions():
+    url = f"/reisinformatie-api/api/v3/disruptions"
+    params = urllib.parse.urlencode({
+        'isActive': 'true',
+    })
+    disruptions = nsapi(url, params)
+    return disruptions
+
 ##-----------------------------------------------------------------------------
 ## Wakatime API
 ##-----------------------------------------------------------------------------
