@@ -1,7 +1,6 @@
 def index(cursor):
-    cursor.execute("DROP TABLE IF EXISTS TRIPS")
 
-    sql = '''CREATE TABLE TRIPS(
+    sql = '''CREATE TABLE IF NOT EXISTS TRIPS(
     ID FLOAT NOT NULL,
     CLIENT_ID FLOAT NOT NULL,
     CHANNEL_ID FLOAT NOT NULL,

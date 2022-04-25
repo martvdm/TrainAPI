@@ -1,8 +1,8 @@
 import mysql
 
+
 def index(cursor):
-    cursor.execute("DROP TABLE IF EXISTS NOTIFICATIONS")
-    sql = '''CREATE TABLE NOTIFICATIONS(
+    sql = '''CREATE TABLE IF NOT EXISTS NOTIFICATIONS(
     ID int AUTO_INCREMENT,
     CLIENT_ID VARCHAR(255) NOT NULL,
     STATION VARCHAR(5) NOT NULL,
