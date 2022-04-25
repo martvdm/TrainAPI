@@ -20,9 +20,11 @@ with open("config.json") as jsonfile:
 @client.event
 async def on_ready():
     print('\033[92mLoading data... \n \033[94mLoaded client: {0.user}'.format(client))
-    # import database.__init__ as db
-    # db.create_tables(config)
-    print('\033[92mLoaded database')
+    import database.__init__ as db
+    db.create_tables(config)  # Create tables if they don't exist
+    import warnings
+    warnings.filterwarnings("ignore", category=UserWarning)  # PandaSQL warning
+    print('\033[92mLoaded database')  # Print success message for table creation
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"ov-NL"))
     loops.start()
 
