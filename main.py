@@ -26,9 +26,10 @@ async def on_ready():
     warnings.filterwarnings("ignore", category=UserWarning)  # PandaSQL warning
     print('\033[92mLoaded database')  # Print success message for table creation
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"ov-NL"))
-    loops.start()
+    loops.start()  # Start loop for updating the database
 
-@tasks.loop(seconds=60)
+
+@tasks.loop(minutes=2)
 async def loops():
     from modules.commands.notify import checknotifications
     await checknotifications(client, config)
