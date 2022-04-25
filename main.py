@@ -56,10 +56,13 @@ async def random(ctx, *, station):
     await index(ctx, config, client)
 
 
-@slash.slash(name="notify", description="Get notifications from a station")
-async def notify(ctx, *, station):
+@slash.slash(name="notify", description="Get notifications from a station", options=[
+    create_option(name='action', description='Choose what you want', required=True, option_type=3, choices=[create_choice(name="subscribe", value="subscribe"), create_choice(name="unsubscribe", value="unsubscribe", )]),
+    create_option(name='station', description='Choose a station', required=True, option_type=3)
+])
+async def notify(ctx, *, action, station):
     from modules.commands.notify import index
-    await index(ctx, station, config, client)
+    await index(ctx, action, station, config, client)
 
 
 client.run(config['token'])
