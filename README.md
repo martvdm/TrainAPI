@@ -1,13 +1,13 @@
 ![Bot logo](https://cdn.discordapp.com/attachments/885185159522041867/962433451779309588/trainapi.PNG)
 
-A discord bot that can trace calamities &amp; departure/arrival times of stations. This bot uses the NS API, more information: https://apiportal.ns.nl/
+> A discord bot that can trace calamities &amp; departure/arrival times of stations. This bot uses the NS API, more information: https://apiportal.ns.nl/
 
-# Made with Discord.py
+
 
 # Setup:
 **Create a discord APP/bot:**
 
-**Please read:** https://discordjs.guide/preparations/setting-up-a-bot-application.html
+> **Please read:** https://discordjs.guide/preparations/setting-up-a-bot-application.html
 
 **Clone the repository:**
 ```bash
@@ -60,9 +60,8 @@ python3 main.py
 
 **Invite the bot to your server**
 
-replace the CLIENT_ID with the client id of your bot
+> replace the CLIENT_ID with the client id of your bot
+> 
+> https://discordapp.com/api/oauth2/authorize?client_id=CLIENT_ID&permissions=8&scope=bot%20applications.commands
 
-```bash
-https://discordapp.com/api/oauth2/authorize?client_id=CLIENT_ID&permissions=8&scope=bot%20applications.commands
-```
 
