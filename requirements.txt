@@ -3,5 +3,5 @@ asyncio
 discord-py-slash-command
 datetime
 mysql
-mysql-connector-python
+mysql-connector-python==8.0.29
 pandas
