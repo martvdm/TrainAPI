@@ -20,7 +20,7 @@ async def index(ctx, action, station, config, client):
     await ctx.send(returnmessage)
 
 
-async def checknotifications(client, config, type='new'):
+async def checknotifications(client, config):
     from database.tables.disruptions import check_action
     print(f'\033[93mChecking for notifications...')
     disruptions = get_disruptions()
