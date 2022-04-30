@@ -19,7 +19,9 @@ with open('config.yaml') as file:
 
 @client.event
 async def on_ready():
-    print('\033[92mLoading data... \n \033[94mLoaded client: {0.user}'.format(client))
+    invitelink = f'https://discordapp.com/api/oauth2/authorize?client_id={client.user.id}&permissions=544491302336&scope=applications.commands%20bot'
+    print(f'Invite link for {client.user}:')
+    print(invitelink)
     import database.__init__ as db
     db.create_tables(config)  # Create tables if they don't exist
     import warnings
