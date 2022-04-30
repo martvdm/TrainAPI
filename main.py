@@ -30,7 +30,7 @@ async def on_ready():
     loops.start()  # Start loop for updating the database
 
 
-@tasks.loop(minutes=2)
+@tasks.loop(minutes=config['api']['refresh-interval'])
 async def loops():
     from modules.commands.notify import checknotifications
     await checknotifications(client, config)
