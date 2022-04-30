@@ -21,47 +21,69 @@ pip install -r requirements.txt
 
 **Create a config file:**
 ```bash
-cp config.example.json config.json
+cp config.example.yaml config.yaml
 ```
 
-**Fill in the config.json file:**
+**Fill in the config.yaml file:**
+> **Please follow the instructions:**
+>
+> make an account at https://apiportal.ns.nl/signin?ReturnUrl=%2F (You need an account to gain acces to the api)
+```yaml
+app:
+   name: trainAPI # Please fill in the name for your application
+   language: en # Choose between (en & nl)
+   version: 1.0.0 # PLEASE DONT CHANGE THIS
+   maintenance-mode: false # (NOT IMPLEMENTED YET)
+   storage:
+      use-mysql: false # If false the application uses a local file system (JSON)
+ # Customize your app with the following settings
+   customization:
+      theme-color: FFFFFF # This hexcolor-code will be used in embeds
+#----------------------------------------------------------------------------
+#  Discord bot settings
+#----------------------------------------------------------------------------
+   discord:
+        token:  # Your discord bot token
+        maintainers: # Discord id's of maintainers
+            - 287598871373283329
+        presence:
+            show-last-station: false # If set to true: presence text will change when a user requests information about station.
+            ## ^^^ Please note that this will affect the performance
+            default-message: "TrainAPI"
+            default-type: PLAYING #PLAYING, LISTENING, WATCHING, STREAMING
 
-```json
-{
-  "token": "BOT_TOKEN",  <-- Replace with your discord-bot token
-  "language": "en, nl", <-- Your language
-  "api": {
-    ---> The NS-Primary key is needed to gain acces to the API
-    ---> make an account at "https://apiportal.ns.nl/signin?ReturnUrl=%2F"
-    "NS-PRIMARY": "Ocp-Apim-Subscription-Key" <-- Replace with your NS-Primary key
-  },
-  "app": {
-    "author": "Mart",
-    "invite": "https://discord.com/api/oauth2/authorize?client_id=CLIENT_ID&permissions=8&scope=bot%20applications.commands", <-- Modify the url with your client id
-    "testing": {
-      "server": "TEST-SERVER-ID", <-- Replace with your test server id (optional)
-      "channel": "TEST-CHANNEL-ID" <-- Replace with your test channel id (optional)
-    }
-  },
-  "database": { 
-    "host": "localhost", <-- Replace with your database IP
-    "port": 3036, <-- Replace with your database port
-    "database": "database", <-- Replace with your database name
-    "username": "root", <-- Replace with your database username
-    "password": ""  <-- Replace with your database password
-  }
-}
+#------------------------------------------------------------------------------
+# Database
+# ONLY SUPPORTS MYSQL
+#------------------------------------------------------------------------------
+# Please note that "use-mysql" must be set to true in the "app" section above, else this section will be ignored.
+#------------------------------------------------------------------------------
+database:
+  host: localhost
+  port: 3306
+  user: root
+  password: root
+  database: trainapi
+
+#------------------------------------------------------------------------------
+# All api credentials
+#------------------------------------------------------------------------------
+api:
+  refresh-interval: 3 # In minutes
+  # ^^^ 3 minutes IS RECOMMENDED, TO MUCH MAY AFFECT THE PERFORMANCE ALSO YOU CAN BE RATE LIMITED BY NS
+  ns-primary-key: SECRETKEY #PRIMARY KEY 
+  # ^^^ This key can be found in the APIPORTAL account dashboard
 ```
 
 **Run the bot:**
 ```bash
-python3 main.py
+python main.py
 ```
 
 **Invite the bot to your server**
 
-> replace the CLIENT_ID with the client id of your bot
+> replace the {CLIENT_ID} with the client id of your bot
 > 
-> https://discordapp.com/api/oauth2/authorize?client_id=CLIENT_ID&permissions=8&scope=bot%20applications.commands
+> https://discordapp.com/api/oauth2/authorize?client_id={CLIENT_ID}&permissions=544491302336&scope=applications.commands%20bot
 
 
