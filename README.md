@@ -80,10 +80,16 @@ api:
 python main.py
 ```
 
-**Invite the bot to your server**
+**Invite the bot to your server:**
 
-> replace the {CLIENT_ID} with the client id of your bot
-> 
-> https://discordapp.com/api/oauth2/authorize?client_id={CLIENT_ID}&permissions=544491302336&scope=applications.commands%20bot
+> When the application starts up it will send a log in the console. 
+> This log will contain the generated invite link.
 
+Example:
+```bash
+$ Config loaded
+$ Invite link for TrainAPI#5430:
+$ https://discordapp.com/api/oauth2/authorize?client_id=959101335008063558&permissions=544491302336&scope=applications.commands%20bot
+                ^^^ This link redirects to the invite page.
+```
 
