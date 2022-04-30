@@ -16,7 +16,7 @@ def nsapi(url, params):
         json_data = json.loads(json_raw)
         conn.close()
     except Exception as e:
-        print('Het ophalen van de API is mislukt. Probeer het later opnieuw.')
+        print('Error: %s' % e)
         print("[Errno {0}] {1}".format(e.errno, e.strerror))
     return json_data
 
