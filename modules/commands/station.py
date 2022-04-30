@@ -14,11 +14,11 @@ from request import get_station
 async def index(ctx, station, config, client):
     station = get_station(station)
     stationcode = station['stationCode']
-    embed = discord.Embed(title="Station: ", description=f"{station['name']}", color=0x000065)
+    embed = discord.Embed(title="Station: ", description=f"{station['name']}", color=config['app']['customization']['theme-color'])
     from __api__ import nsapi
     params = urllib.parse.urlencode({
         # Request parameters
-        'lang': f'{config["language"]}',
+        'lang': f'en',
         'station': f'{stationcode}',
         'uicCode': '',
         'dateTime': '',
@@ -60,7 +60,7 @@ async def departures(ctx, station, config, client):
     from __api__ import nsapi
     params = urllib.parse.urlencode({
         # Request parameters
-        'lang': f'{config["language"]}',
+        'lang': f'en',
         'station': f'{stationcode}',
         'uicCode': '',
         'dateTime': '',
