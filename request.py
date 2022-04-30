@@ -1,10 +1,10 @@
 ## All request functions for the API's
 from __api__ import nsapi
 import http.client, urllib.request, urllib.parse, urllib.error, base64
-import json
+import yaml
 
-with open("config.json") as jsonfile:
-    config = json.load(jsonfile)
+with open('config.yaml') as file:
+    config = yaml.full_load(file)
 ## NS API
 
 
@@ -13,7 +13,7 @@ def get_station(station):
         'q':  f'{station}',
         'limit': 8,
         'details': 'false',
-        'lang': f'{ config["language"] }',
+        'lang': config['app']['language'],
     })
     url = f"/places-api/v2/places"
     get_results = nsapi(url, params)
@@ -25,7 +25,7 @@ def get_station(station):
         'station_code': f'{stationcode}',
         'limit': 1,
         'details': 'false',
-        'lang': f'{config["language"]}',
+        'lang': config['app']['language'],
     })
     station = nsapi(url, params)
     return station['payload'][0]['locations'][0]

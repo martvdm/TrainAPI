@@ -1,8 +1,13 @@
 import mysql.connector
 import os
 
+def connect(config):
+    dbconfig = config['database']
+    conn = mysql.connector.connect(user=dbconfig['user'], password=dbconfig['password'], host=dbconfig['host'], port=dbconfig['port'], database=dbconfig['database'])
+    return conn
+
 def create_tables(config):
-    conn = mysql.connector.connect(user=config['database']['username'], password=config['database']['password'], host=config['database']['host'], port=config['database']['port'], database=config['database']['database'])
+    conn = connect(config)
     import database.tables.trips as trips
     import database.tables.notifications as notifications
     import database.tables.disruptions as disruptions

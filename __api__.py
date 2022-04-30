@@ -1,12 +1,13 @@
 import json
 import http.client, urllib.request, urllib.parse, urllib.error, base64
+import yaml
 
-with open("./config.json") as jsonfile:
-    config = json.load(jsonfile)
+with open('config.yaml') as file:
+    config = yaml.full_load(file)
 
 def nsapi(url, params):
     headers = {
-        'Ocp-Apim-Subscription-Key': f"{config['api']['NS-PRIMARY']}",
+        'Ocp-Apim-Subscription-Key': f"{config['api']['ns-primary-key']}",
     }
     try:
         conn = http.client.HTTPSConnection('gateway.apiportal.ns.nl')

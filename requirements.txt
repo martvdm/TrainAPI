@@ -1,7 +1,9 @@
 discord.py
-asyncio
+asyncio~=3.4.3
 discord-py-slash-command
-datetime
-mysql
+datetime~=4.4
+mysql~=0.0.3
 mysql-connector-python==8.0.29
-pandas
+pandas~=1.4.2
+discord~=1.7.3
+PyYAML~=6.0

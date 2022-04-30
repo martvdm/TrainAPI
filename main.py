@@ -8,28 +8,29 @@ from discord_slash import SlashCommand, SlashContext
 from discord_slash.utils.manage_commands import create_option, create_choice
 import modules.commands as commandmodule
 import asyncio
+import yaml
 
 client = commands.Bot(command_prefix='!')
 slash = SlashCommand(client, sync_commands=True)
 
-with open("config.json") as jsonfile:
-    config = json.load(jsonfile)
+with open('config.yaml') as file:
+    config = yaml.full_load(file)
     print('\033[1;32mConfig loaded')
-
 
 @client.event
 async def on_ready():
-    print('\033[92mLoading data... \n \033[94mLoaded client: {0.user}'.format(client))
+    invitelink = f'https://discordapp.com/api/oauth2/authorize?client_id={client.user.id}&permissions=544491302336&scope=applications.commands%20bot'
+    print(f'Invite link for {client.user}:')
+    print(invitelink)
     import database.__init__ as db
     db.create_tables(config)  # Create tables if they don't exist
     import warnings
     warnings.filterwarnings("ignore", category=UserWarning)  # PandaSQL warning
-    print('\033[92mLoaded database')  # Print success message for table creation
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"ov-NL"))
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{config['app']['discord']['presence']['default-message']}"))
     loops.start()  # Start loop for updating the database
 
 
-@tasks.loop(minutes=2)
+@tasks.loop(minutes=config['api']['refresh-interval'])
 async def loops():
     from modules.commands.notify import checknotifications
     await checknotifications(client, config)
@@ -68,4 +69,4 @@ async def notify(ctx, *, action, station):
     await index(ctx, action, station, config, client)
 
 
-client.run(config['token'])
+client.run(config['app']['discord']['token'])
