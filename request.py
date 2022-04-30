@@ -2,9 +2,10 @@
 from __api__ import nsapi
 import http.client, urllib.request, urllib.parse, urllib.error, base64
 import json
+import yaml
 
-with open("config.json") as jsonfile:
-    config = json.load(jsonfile)
+with open('config.yaml') as file:
+    config = yaml.full_load(file)
 ## NS API
 
 

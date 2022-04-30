@@ -6,6 +6,7 @@
 #------------------------------------------------------------------------------
 app:
    name: trainAPI
+   language: en # Choose between (en & nl)
    version: 1.0.0 # PLEASE DONT CHANGE THIS
    maintenance-mode: false
    storage:
