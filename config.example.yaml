@@ -14,16 +14,16 @@ app:
  # Customize your app with the following settings
    customization:
       theme-color: FFFFFF
-      presence-text: TrainAPI
 #----------------------------------------------------------------------------
 #  Discord bot settings
 #----------------------------------------------------------------------------
    discord:
         token:  # Your discord bot token
-        maintainers: # List of discord user ids
+        maintainers: # Discord id's of maintainers
             - 287598871373283329
         presence:
-            show-last-station: true
+            show-last-station: false # If set to true: presence text will change when a user requests information about station.
+            ## ^^^ Please note that this will affect the performance
             default-message: "TrainAPI"
             default-type: PLAYING #PLAYING, LISTENING, WATCHING, STREAMING
 
@@ -44,6 +44,7 @@ database:
 # All api credentials
 #------------------------------------------------------------------------------
 api:
-  refresh-interval: 60 # Refresh interval in seconds
+  refresh-interval: 3 #In minutes
+  # ^^^ 3 minutes IS RECOMMENDED, TO MUCH MAY AFFECT THE PERFORMANCE ALSO YOU CAN BE RATE LIMITED BY NS
   ns-primary-key: SECRETKEY #PRIMARY KEY
 
