@@ -1,6 +1,6 @@
 import pandas as pd
 import mysql
-
+from database.__init__ import connect
 
 def index(cursor):
     sql = '''CREATE TABLE IF NOT EXISTS DISRUPTIONS(
@@ -14,7 +14,7 @@ def index(cursor):
 def check_action(disruption, config):
     action = 'none'
     situation = disruption['timespans'][0]['situation']['label']
-    conn = mysql.connector.connect(user=config['database']['username'], password=config['database']['password'], host=config['database']['host'], port=config['database']['port'], database=config['database']['database'])
+    conn = connect(config)
     cursor = conn.cursor()
     search1 = f"SELECT * FROM DISRUPTIONS WHERE ID = '{disruption['id']}'"  # Check if the disruption is already in the database
     search2 = f"SELECT * FROM DISRUPTIONS WHERE ID = '{disruption['id']}' AND SITUATION = '{situation}'" # Check if the situation has changed

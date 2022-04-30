@@ -1,5 +1,4 @@
-import mysql
-
+from database.__init__ import connect
 
 def index(cursor):
     sql = '''CREATE TABLE IF NOT EXISTS NOTIFICATIONS(
@@ -14,9 +13,7 @@ def index(cursor):
 def create(config, action, client_id, station):
     stationcode = station['stationCode']
     import pandas as pd
-    conn = mysql.connector.connect(user=config['database']['username'], password=config['database']['password'],
-                                   host=config['database']['host'], port=config['database']['port'],
-                                   database=config['database']['database'])
+    conn = connect(config)
     cursor = conn.cursor()
     searchnotification = pd.read_sql(f"SELECT * FROM NOTIFICATIONS WHERE STATION = '{stationcode}' AND CLIENT_ID = '{client_id}'", conn)
     if action == 'subscribe':
@@ -41,9 +38,7 @@ def create(config, action, client_id, station):
 
 def find_users(config, stationcode):
     import pandas as pd
-    conn = mysql.connector.connect(user=config['database']['username'], password=config['database']['password'],
-                                   host=config['database']['host'], port=config['database']['port'],
-                                   database=config['database']['database'])
+    conn = connect(config)
     sql = f"SELECT CLIENT_ID FROM NOTIFICATIONS WHERE STATION = '{stationcode}'"
     users = pd.read_sql(sql, conn)
     conn.close()
