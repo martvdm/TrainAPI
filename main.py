@@ -8,14 +8,14 @@ from discord_slash import SlashCommand, SlashContext
 from discord_slash.utils.manage_commands import create_option, create_choice
 import modules.commands as commandmodule
 import asyncio
+import yaml
 
 client = commands.Bot(command_prefix='!')
 slash = SlashCommand(client, sync_commands=True)
 
-with open("config.json") as jsonfile:
-    config = json.load(jsonfile)
+with open('config.yaml') as file:
+    config = yaml.full_load(file)
     print('\033[1;32mConfig loaded')
-
 
 @client.event
 async def on_ready():
@@ -25,7 +25,7 @@ async def on_ready():
     import warnings
     warnings.filterwarnings("ignore", category=UserWarning)  # PandaSQL warning
     print('\033[92mLoaded database')  # Print success message for table creation
-    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"ov-NL"))
+    await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{config['app']['discord']['presence']['default-message']}"))
     loops.start()  # Start loop for updating the database
 
 
@@ -68,4 +68,4 @@ async def notify(ctx, *, action, station):
     await index(ctx, action, station, config, client)
 
 
-client.run(config['token'])
+client.run(config['app']['discord']['token'])
