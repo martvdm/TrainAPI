@@ -26,7 +26,6 @@ async def on_ready():
     db.create_tables(config)  # Create tables if they don't exist
     import warnings
     warnings.filterwarnings("ignore", category=UserWarning)  # PandaSQL warning
-    print('\033[92mLoaded database')  # Print success message for table creation
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{config['app']['discord']['presence']['default-message']}"))
     loops.start()  # Start loop for updating the database
 
