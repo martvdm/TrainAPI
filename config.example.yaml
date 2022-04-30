@@ -1,0 +1,48 @@
+#------------------------------------------------------------------------------
+# AUTHOR: Mart van der Molen
+# PLEASE READ THE README.md FILE FOR INSTRUCTIONS
+#
+#  GLOBAL SETTINGS:
+#------------------------------------------------------------------------------
+app:
+   name: trainAPI
+   version: 1.0.0 # PLEASE DONT CHANGE THIS
+   maintenance-mode: false
+   storage:
+      use-mysql: false # If false the application uses a local file system (JSON)
+ # Customize your app with the following settings
+   customization:
+      theme-color: FFFFFF
+      presence-text: TrainAPI
+#----------------------------------------------------------------------------
+#  Discord bot settings
+#----------------------------------------------------------------------------
+   discord:
+        token:  # Your discord bot token
+        maintainers: # List of discord user ids
+            - 287598871373283329
+        presence:
+            show-last-station: true
+            default-message: "TrainAPI"
+            default-type: PLAYING #PLAYING, LISTENING, WATCHING, STREAMING
+
+#------------------------------------------------------------------------------
+# Database
+# ONLY SUPPORTS MYSQL
+#------------------------------------------------------------------------------
+# Please note that "use-mysql" must be set to true in the "app" section above, else this section will be ignored.
+#------------------------------------------------------------------------------
+database:
+  host: localhost
+  port: 3306
+  user: root
+  password: root
+  database: trainapi
+
+#------------------------------------------------------------------------------
+# All api credentials
+#------------------------------------------------------------------------------
+api:
+  refresh-interval: 60 # Refresh interval in seconds
+  ns-primary-key: SECRETKEY #PRIMARY KEY
+
