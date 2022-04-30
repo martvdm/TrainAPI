@@ -11,7 +11,7 @@
 
 **Clone the repository:**
 ```bash
-git clone https://github.com/martvdm/TrainAPI.git
+$ git clone https://github.com/martvdm/TrainAPI.git
 ```
 
 **Install packages:**
@@ -21,7 +21,7 @@ pip install -r requirements.txt
 
 **Create a config file:**
 ```bash
-cp config.example.yaml config.yaml
+$ cp config.example.yaml config.yaml
 ```
 
 **Fill in the config.yaml file:**
@@ -77,7 +77,7 @@ api:
 
 **Run the bot:**
 ```bash
-python main.py
+$ python main.py
 ```
 
 **Invite the bot to your server:**
